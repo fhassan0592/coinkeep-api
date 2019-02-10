@@ -23,11 +23,11 @@ const AuthSchema = new Schema({
 AuthSchema.pre('save', function(next) {
     let auth = this;
     if (!auth.isModified('password')) return next();
-    bcrypt.genSalt(process.env.SALT_ROUNDS, (err, hash) => {
+    bcrypt.genSalt(process.env.SALT_ROUNDS, (err, salt) => {
         if (err) return next(err);
         bcrypt.hash(auth.password, salt, null, (err, hash) => {
             if (err) return next(err);
-            auth,password = hash;
+            auth.password = hash;
             return next();
         });
     });
