@@ -4,12 +4,16 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import routes from './main.routes';
+
 dotenv.config();
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use('/api/v1', routes);
 
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }, (err) => {
     if (err) {
